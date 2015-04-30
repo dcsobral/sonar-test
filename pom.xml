@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.richrelevance.test</groupId>
+  <artifactId>sonar-test</artifactId>
+  <version>master-SNAPSHOT</version>
+
+  <properties>
+    <sonar.sources>pom.xml,src/main/scala</sonar.sources>
+    <sonar.tests>src/test/scala</sonar.tests>
+
+    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+    <sonar.jdbc.driver>org.postgresql.Driver</sonar.jdbc.driver>
+    <sonar.scm.provider>git</sonar.scm.provider>
+    <sonar.scoverage.reportPath>${basedir}/target/scoverage.xml</sonar.scoverage.reportPath>
+    <sonar.surefire.reportsPath>${basedir}/target/surefire-reports</sonar.surefire.reportsPath>
+
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>scalaz-bintray</id>
+      <name>Scalaz Bintray Repo</name>
+      <url>https://dl.bintray.com/scalaz/releases</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.specs2</groupId>
+      <artifactId>specs2_2.11</artifactId>
+      <version>2.4.16</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>2.11.5</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>scala-compile-first</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>add-source</goal>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <scalaVersion>2.11.5</scalaVersion>
+            </configuration>
+          </execution>
+          <execution>
+            <id>scala-test-compile</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <scalaVersion>2.11.5</scalaVersion>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <scalaVersion>2.11.5</scalaVersion>
+          <fork>true</fork>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.scoverage</groupId>
+        <artifactId>scoverage-maven-plugin</artifactId>
+        <version>1.0.4</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.scoverage</groupId>
+        <artifactId>scoverage-maven-plugin</artifactId>
+        <version>1.0.4</version>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>
